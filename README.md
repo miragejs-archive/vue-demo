@@ -1,29 +1,8 @@
-# vue
+# Mirage Vue demo
 
-## Project setup
-```
-npm install
-```
+To see the demo, run
 
-### Compiles and hot-reloads for development
+```sh
+yarn install  # or npm install
+yarn serve    # or npm run serve
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
