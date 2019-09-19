@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <li v-for="user in users" v-bind:key="user.attributes.name">
-      {{ user.attributes.name }}
+    <li v-for="user in users" v-bind:key="user.id">
+      {{ user.name }}
     </li>
   </div>
 </template>
@@ -13,9 +13,10 @@ export default {
     users: []
   }),
   created: function () {
+    // console.log('hi');
     fetch('/api/users')
       .then(response => response.json())
-      .then(json => this.users = json.data);
+      .then(json => this.users = json.users);
   }
 }
 </script>

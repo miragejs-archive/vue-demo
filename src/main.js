@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { Server, Model, Factory, JSONAPISerializer } from '@miragejs/server';
-
+import { Server, Model, Factory } from '@miragejs/server';
 
 Vue.config.productionTip = false
 
@@ -16,18 +15,17 @@ let server = new Server({
       }
     })
   },
-  serializers: {
-    application: JSONAPISerializer
+
+  seeds(server) {
+    server.createList('user', 21);
   },
-  scenarios: {
-    default(server) {
-      server.createList('user', 10);
-    }
-  },
-  baseConfig() {
+
+  routes() {
     this.namespace = 'api';
-    this.get('/users');
-    this.passthrough();
+
+    this.resource('user');
+
+    // this.passthrough('http://localhost:8080/**');
   }
 });
 
