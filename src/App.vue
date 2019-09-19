@@ -13,7 +13,7 @@ export default {
     users: []
   }),
   created: function () {
-    // console.log('hi');
+    console.log('hi');
     fetch('/api/users')
       .then(response => response.json())
       .then(json => this.users = json.users);
