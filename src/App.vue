@@ -1,33 +1,46 @@
 <template>
-  <div id="app">
-    <li v-for="user in users" v-bind:key="user.id">
-      {{ user.name }}
-    </li>
+  <div id="app" class="text-gray-900 bg-gray-300 h-screen pt-16">
+    <div class="max-w-sm mx-auto py-6 px-4 bg-white shadow-lg rounded">
+      <h1 class="text-2xl font-bold px-3">Todos</h1>
+
+      <div class="mt-6">
+        <p class="text-gray-500" v-if="isLoading">Loading...</p>
+
+        <ul v-else>
+          <Todo
+            v-for="todo in todos"
+            :key="todo.id"
+            :todo="todo"
+            class="my-2"
+          />
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import Todo from "./components/Todo";
+
 export default {
-  name: 'app',
+  components: { Todo },
+
   data: () => ({
-    users: []
+    isLoading: true,
+    todos: []
   }),
-  created: function () {
-    console.log('hi');
-    fetch('/api/users')
-      .then(response => response.json())
-      .then(json => this.users = json.users);
+
+  created: function() {
+    axios
+      .get("/api/todos")
+      .then(({ data }) => {
+        this.isLoading = false;
+        this.todos = data.todos;
+      })
+      .catch(console.error);
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style src="./assets/tailwind.css"></style>
