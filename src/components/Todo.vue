@@ -3,59 +3,91 @@
     :class="[
       {
         'bg-white border-gray-300': isFocused,
-        'border-transparent': !isFocused,
-        'hover:bg-gray-200': !isFocused && !isSaving
+        'border-transparent hover:bg-gray-200': !isFocused,
+        'opacity-25': !isFocused && localTodo.isDone
       },
-      'rounded focus:bg-white border-2 flex items-center'
+      'rounded focus:bg-white border-2 flex items-center relative'
     ]"
   >
-    <input type="checkbox" v-model="todo.isDone" class="ml-2" />
+    <input
+      type="checkbox"
+      v-model="localTodo.isDone"
+      @change="save"
+      class="ml-2"
+    />
 
     <form @submit.prevent="save" class="w-full relative">
       <input
         type="text"
-        v-model="todo.text"
+        v-model="localTodo.text"
+        placeholder="New Todo"
         @focus="isFocused = true"
-        @blur="isFocused = false"
-        :disabled="isSaving"
-        :class="
-          `bg-transparent focus:outline-none px-3 py-1 block w-full
-          ${isSaving ? 'opacity-25' : ''}
-          `
-        "
+        @blur="save"
+        :class="[
+          {
+            'line-through': localTodo.isDone && !isFocused
+          },
+          'bg-transparent focus:outline-none px-3 py-1 block w-full'
+        ]"
       />
-      <span
-        v-if="isFocused"
-        class="absolute right-0 top-0 opacity-50 text-gray-700 mr-2 text-xs h-full flex items-center leading-none"
-      >
-        <EnterKey iconClass="w-12 mr-1" /> to save</span
-      >
     </form>
   </li>
 </template>
 
 <script>
-import EnterKey from "./icons/EnterKey";
 import axios from "axios";
 
 export default {
-  components: { EnterKey },
-
   props: ["todo"],
 
-  data: () => ({
-    isFocused: false,
-    isSaving: false
-  }),
+  data() {
+    return {
+      localTodo: { ...this.todo },
+      isFocused: false
+    };
+  },
+
+  watch: {
+    todo: {
+      handler(todo) {
+        this.localTodo = { ...this.todo };
+      },
+      deep: true
+    }
+  },
+
+  computed: {
+    hasChanges() {
+      return (
+        this.localTodo.text !== this.todo.text ||
+        this.localTodo.isDone !== this.todo.isDone
+      );
+    }
+  },
 
   methods: {
     async save() {
-      this.isSaving = true;
+      this.isFocused = false;
 
-      await axios.patch(`/api/todos/${this.todo.id}`, { data: this.todo });
-
-      this.isSaving = false;
+      if (this.hasChanges) {
+        this.$emit("change", this.localTodo);
+      }
     }
   }
 };
 </script>
+
+<style lang="css" scoped>
+.spin {
+  animation: spin 750ms steps(8, end) infinite
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
