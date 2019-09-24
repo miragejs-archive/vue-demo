@@ -14,7 +14,6 @@
     <form @submit.prevent="save" class="w-full relative">
       <input
         type="text"
-        ref="input"
         v-model="todo.text"
         @focus="isFocused = true"
         @blur="isFocused = false"
@@ -56,9 +55,6 @@ export default {
       await axios.patch(`/api/todos/${this.todo.id}`, { data: this.todo });
 
       this.isSaving = false;
-      this.$nextTick(() => {
-        this.$refs.input.focus();
-      });
     }
   }
 };
