@@ -4,7 +4,7 @@
       {
         'bg-white border-gray-300': isFocused,
         'border-transparent hover:bg-gray-200': !isFocused,
-        'opacity-25': !isFocused && localTodo.isDone
+        'opacity-50': !isFocused && localTodo.isDone
       },
       'rounded focus:bg-white border-2 flex items-center relative'
     ]"
@@ -35,8 +35,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   props: ["todo"],
 
@@ -49,7 +47,7 @@ export default {
 
   watch: {
     todo: {
-      handler(todo) {
+      handler() {
         this.localTodo = { ...this.todo };
       },
       deep: true
