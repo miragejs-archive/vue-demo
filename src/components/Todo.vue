@@ -74,18 +74,3 @@ export default {
   }
 };
 </script>
-
-<style lang="css" scoped>
-.spin {
-  animation: spin 750ms steps(8, end) infinite
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>
