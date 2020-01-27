@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@miragejs/server": "0.1.27-beta.3",
+    "miragejs": "0.1.33",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "prettier": "^1.18.2",
@@ -24,6 +24,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "null-loader": "^3.0.0",
+    "vue-cli-plugin-webpack-bundle-analyzer": "^2.0.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
