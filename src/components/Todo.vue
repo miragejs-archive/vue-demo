@@ -8,6 +8,7 @@
       },
       'rounded focus:bg-white border-2 flex items-center relative'
     ]"
+    :data-testid="localTodo.text"
   >
     <input
       type="checkbox"
@@ -16,7 +17,7 @@
       class="ml-2"
     />
 
-    <form @submit.prevent="save" class="w-full relative">
+    <form @submit.prevent="save" class="relative w-full">
       <input
         type="text"
         v-model="localTodo.text"
