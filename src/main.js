@@ -1,12 +1,32 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App.vue";
-import "./server";
+import { makeServer } from "./server";
+import { Server, Response } from "miragejs";
 import Todos from "./components/Todos";
 import About from "./components/About";
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
+
+if (window.Cypress) {
+  // mirage cypress/test server
+  new Server({
+    environment: "test",
+    routes() {
+      let methods = ["get", "put", "patch", "post", "delete"];
+      methods.forEach(method => {
+        this[method]("/*", async (schema, request) => {
+          let [status, headers, body] = await window.handleFromCypress(request);
+          return new Response(status, headers, body);
+        });
+      });
+    }
+  });
+} else {
+  // this is the mirage development and production server
+  makeServer();
+}
 
 const router = new VueRouter({
   mode: "history",

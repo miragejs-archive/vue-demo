@@ -1,6 +1,6 @@
 <template lang="html">
-  <div class="max-w-sm mx-auto py-6 px-4 bg-white shadow-lg rounded">
-    <div class="flex justify-between items-center px-3">
+  <div class="max-w-sm px-4 py-6 mx-auto bg-white rounded shadow-lg">
+    <div class="flex items-center justify-between px-3">
       <h1 class="text-2xl font-bold">Todos</h1>
 
       <div class="text-blue-500">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="mt-6">
-      <p class="text-gray-500 px-3" v-if="isLoading">Loading...</p>
+      <p class="px-3 text-gray-500" v-if="isLoading">Loading...</p>
 
       <div v-else>
         <div class="px-3">
@@ -22,7 +22,7 @@
               type="text"
               v-model="newTodo.text"
               placeholder="New todo"
-              class="bg-white px-3 py-2 shadow rounded block w-full focus:outline-none placeholder-gray-500"
+              class="block w-full px-3 py-2 placeholder-gray-500 bg-white rounded shadow focus:outline-none"
             />
           </form>
         </div>
@@ -38,13 +38,13 @@
         </ul>
 
         <div
-          class="mt-12 px-3 flex justify-between font-medium text-gray-500 text-sm"
+          class="flex justify-between px-3 mt-12 text-sm font-medium text-gray-500"
         >
           <p v-if="todos.length">{{ done }} / {{ total }} complete</p>
           <button
             @click="deleteCompleted"
             v-if="done"
-            class="text-blue-500 font-medium focus:outline-none focus:text-blue-300"
+            class="font-medium text-blue-500 focus:outline-none focus:text-blue-300"
           >
             Clear completed
           </button>

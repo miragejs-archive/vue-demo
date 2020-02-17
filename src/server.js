@@ -1,40 +1,46 @@
 import { Server } from "miragejs";
 
-let server = new Server({
-  seeds(server) {
-    server.db.loadData({
-      todos: [
-        { text: "Buy groceries", isDone: false },
-        { text: "Walk the dog", isDone: false },
-        { text: "Do laundry", isDone: false }
-      ]
-    });
-  },
+export function makeServer({ environment = "development" } = {}) {
+  let server = new Server({
+    environment,
 
-  routes() {
-    this.namespace = "api";
-    this.timing = 750;
+    seeds(server) {
+      server.db.loadData({
+        todos: [
+          { text: "Buy groceries", isDone: false },
+          { text: "Walk the dog", isDone: false },
+          { text: "Do laundry", isDone: false }
+        ]
+      });
+    },
 
-    this.get("/todos", ({ db }) => {
-      return db.todos;
-    });
+    routes() {
+      this.namespace = "api";
+      this.timing = 750;
 
-    this.patch("/todos/:id", (schema, request) => {
-      let todo = JSON.parse(request.requestBody).data;
+      this.get("/todos", ({ db }) => {
+        return db.todos;
+      });
 
-      return schema.db.todos.update(todo.id, todo);
-    });
+      this.patch("/todos/:id", (schema, request) => {
+        let todo = JSON.parse(request.requestBody).data;
 
-    this.post("/todos", (schema, request) => {
-      let todo = JSON.parse(request.requestBody).data;
+        return schema.db.todos.update(todo.id, todo);
+      });
 
-      return schema.db.todos.insert(todo);
-    });
+      this.post("/todos", (schema, request) => {
+        let todo = JSON.parse(request.requestBody).data;
 
-    this.delete("/todos/:id", (schema, request) => {
-      return schema.db.todos.remove(request.params.id);
-    });
-  }
-});
+        return schema.db.todos.insert(todo);
+      });
 
-window.server = server;
+      this.delete("/todos/:id", (schema, request) => {
+        return schema.db.todos.remove(request.params.id);
+      });
+    }
+  });
+
+  window.server = server;
+
+  return server;
+}
