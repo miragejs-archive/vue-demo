@@ -1,8 +1,8 @@
 import { Server, Model } from "miragejs"
 import axios from "axios"
 
-describe.only('testing', () => {
-    it.only("routes config option works", async () => {
+describe('testing', () => {
+    it("routes config option works", async () => {
         
         let server = new Server({
             environment: "test",
@@ -24,8 +24,4 @@ describe.only('testing', () => {
         });
         server.shutdown()
     });
-
-  
-
-
 })
