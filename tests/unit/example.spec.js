@@ -18,7 +18,6 @@ describe('testing', () => {
         });
         server.createList("user", 3);
         let response = await axios.get("/api/users");
-        // let data = await axios.get("/api/users");
         expect(response.data).toEqual({
             users: [{ id: "1" }, { id: "2" }, { id: "3" }]
         });
